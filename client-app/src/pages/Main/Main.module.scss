@@ -1,0 +1,222 @@
+#headerImage {
+  margin-bottom: 80px;
+}
+
+.links,
+.info {
+  width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 80px;
+}
+
+.info > p {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 34px;
+}
+
+.numbers {
+  padding-bottom: 30px;
+  display: flex;
+  justify-content: start;
+  & span {
+    display: block;
+    background: linear-gradient(
+      90deg,
+      rgba(247, 148, 29, 0.7) 0%,
+      rgba(39, 170, 225, 0.7) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-weight: 700;
+    font-size: 86px;
+    line-height: 105px;
+    letter-spacing: 0.095em;
+    position: relative;
+    min-width: 270px;
+    &::after {
+      position: absolute;
+      top: 90px;
+      left: 0;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 34px;
+      letter-spacing: initial;
+      color: rgba(0, 0, 0, 0.9);
+    }
+    &:nth-of-type(1)::after {
+      content: "Специальностей";
+    }
+    &:nth-of-type(2)::after {
+      content: "Преподавателей";
+    }
+    &:nth-of-type(3)::after {
+      content: "Выпускников";
+    }
+  }
+}
+
+.openDoors {
+  width: 1180px;
+  height: 160px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > .openDoors__text > h3 {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 26px;
+    color: #000000;
+  }
+
+  & > .openDoors__text > p {
+    margin-top: 20px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    color: #333333;
+    width: 630px;
+  }
+
+  & > .openDoors__button {
+    width: 222px;
+    height: 60px;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .openDoors__date {
+  }
+
+  & .openDoors__day {
+    font-weight: 700;
+    font-size: 75px;
+    line-height: 100%;
+  }
+  & .openDoors__month {
+    font-weight: 600;
+    font-size: 23px;
+    line-height: 100%;
+  }
+}
+
+.linksDown {
+  display: flex;
+}
+
+.other {
+  width: 680px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.programs {
+  width: 480px;
+  height: 460px;
+  border-radius: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 33px 40px 50px 40px;
+  & > h3 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 26px;
+    color: #000000;
+  }
+  & > p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333333;
+    text-align: center;
+  }
+  & .programs__button {
+    width: 222px;
+    height: 50px;
+    border: 2px solid #00093c;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.news {
+  width: 330px;
+  height: 220px;
+  border-radius: 20px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 33px 0px 46px 0px;
+  & > h3 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 26px;
+    color: #000000;
+  }
+}
+
+.worldIT {
+  width: 330px;
+  height: 220px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 33px 0px 46px 0px;
+  & > h3 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 26px;
+    color: #000000;
+  }
+}
+
+.test {
+  margin-top: 20px;
+  width: 680px;
+  height: 220px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 80px 0 50px;
+  & > .test__text > h3 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 26px;
+    color: #000000;
+  }
+
+  & > .test__text > p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333333;
+    width: 400px;
+  }
+}
+
+.openDoors,
+.programs,
+.news,
+.worldIT,
+.test {
+  position: relative;
+}
