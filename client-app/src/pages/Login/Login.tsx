@@ -37,8 +37,8 @@ const Login = () => {
 
   const onLoginSubmit: SubmitHandler<FormLoginValueType> = async (data) => {
     const accountRole = await axios.post("/api/account/login", {
-      logLogin: data.logLogin,
-      logPassword: crypto.SHA1(data.logPassword).toString()
+      login: data.logLogin,
+      password: crypto.SHA1(data.logPassword).toString()
     }).then(({data}) => data);
     if (accountRole === "err") dispatch(dropUser())
     else {
@@ -66,12 +66,12 @@ const Login = () => {
       registerSetError("regLogin", {type: "custom", message: "userLogin is using"})
     } else {
       await axios.post("/api/account/register", {
-        regLogin: data.regLogin,
-        regEmail: data.regEmail,
-        regPassword: crypto.SHA1(data.regPassword).toString(),
-        regName: data.regName,
-        regSurname: data.regSurname,
-        regPatronomic: data.regPatronomic,
+        login: data.regLogin,
+        email: data.regEmail,
+        password: crypto.SHA1(data.regPassword).toString(),
+        name: data.regName,
+        surname: data.regSurname,
+        patronymic: data.regPatronomic,
       });
       registerReset();
       navigate("/");

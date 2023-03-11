@@ -6,11 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.grachev.university.model.Appeal;
 import ru.grachev.university.model.ServicesInfo;
-import ru.grachev.university.model.viewModel.FooterAppeal;
 import ru.grachev.university.service.AppealServices;
 import ru.grachev.university.service.ServicesInfoService;
-
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @RestController
@@ -19,20 +16,20 @@ public class ServiceController {
     private final ServicesInfoService servicesInfoService;
     private final AppealServices appealServices;
 
-    @GetMapping("/servicesinfo")
-    public ResponseEntity<ServicesInfo> getServicesInfo()
+    @GetMapping("servicesinfo")
+    public ResponseEntity<?> getServicesInfo()
     {
         final ServicesInfo lastInfo = servicesInfoService.getLastInfo();
         return lastInfo != null
-                ? new ResponseEntity<>(lastInfo, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                ? ResponseEntity.ok(lastInfo)
+                : ResponseEntity.ok().body(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/appeal")
-    public ResponseEntity<Appeal> postAppeal(@RequestBody FooterAppeal footerAppeal)
+    @PostMapping("appeal")
+    public ResponseEntity<Appeal> postAppeal(@RequestBody Appeal footerAppeal)
     {
         Appeal newAppeal = appealServices.create(footerAppeal);
-        return new ResponseEntity<Appeal>(newAppeal ,HttpStatus.CREATED);
+        return ResponseEntity.ok(newAppeal);
     }
 
 }
