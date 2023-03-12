@@ -17,8 +17,10 @@ public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+    @ManyToOne
+    public Course course;
     public String theme;
-    @OneToMany
+    @OneToMany(mappedBy = "test")
     public List<Question> questions;
     @ManyToMany
     public List<Student> passedStudents;

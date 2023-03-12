@@ -19,6 +19,6 @@ public class Course {
     public String title;
     //TODO: привязать тичера к пользователю
     public String teacher;
-    @OneToMany
+    @OneToMany(mappedBy = "course")
     public List<Test> tests;
 }

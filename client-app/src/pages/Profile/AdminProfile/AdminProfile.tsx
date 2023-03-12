@@ -16,8 +16,24 @@ const AdminProfile = () => {
   const [users, setUsers] = React.useState<userWithoutRole[]>([])
 
   React.useEffect(() => {
-    axios.get(`/api/admin/usersWithoutRole`).then(({data}) => setUsers(data));
+    axios.get(`/api/admin/userswithoutrole`).then(({data}) => setUsers(data));
   }, [])
+
+  //TODO: в случае ошибки при применении роли выводить alert
+  const setUserRole = (item: userWithoutRole, idx: number) => {
+    axios.post("/api/admin/setuserrole",
+      {
+        login: item.login,
+        // @ts-ignore
+        role: document.getElementById("role" + idx).value
+      })
+    setUsers(users?.filter(user => user.login != item.login))
+  }
+
+  const exit = () => {
+    dispatch(dropUser());
+    navigate("/")
+  }
 
   return (
     <div>
@@ -32,41 +48,28 @@ const AdminProfile = () => {
           </tr>
           </thead>
           <tbody>
-          {users?.map((item, idx) => <tr key={idx + "userKey"} className={style.userItem}>
-            <td className={style.userItem__login}>{item.login}</td>
-            <td className={style.userItem__regDate}>{item.registerDate.toString()}</td>
-            <td>
-              <select name={"role" + idx} id={"role" + idx}>
-                <option value="user">Пользователь</option>
-                <option value="teacher">Учитель</option>
-                <option value="student">Студент</option>
-              </select>
-            </td>
-            <td>
-              <button onClick={() => {
-                axios.post("/api/admin/setUserRole",
-                  {
-                    login: item.login,
-                    // @ts-ignore
-                    role: document.getElementById("role" + idx).value
-                  })
-                setUsers(users?.filter(user => user.login != item.login))
-              }
-              }>Присвоить
-              </button>
-            </td>
-
-          </tr>)}
+          {users?.map(
+            (item, idx) => (
+              <tr key={idx + "userKey"} className={style.userItem}>
+                <td className={style.userItem__login}>{item.login}</td>
+                <td className={style.userItem__regDate}>{item.registerDate.toString()}</td>
+                <td>
+                  <select name={"role" + idx} id={"role" + idx}>
+                    <option value="user">Пользователь</option>
+                    <option value="teacher">Учитель</option>
+                    <option value="student">Студент</option>
+                  </select>
+                </td>
+                <td>
+                  <button onClick={() => setUserRole(item, idx)}>Присвоить</button>
+                </td>
+              </tr>
+            )
+          )}
           </tbody>
         </table> : <h2>Нет новых пользователей</h2>}
       </div>
-      <button className={style.exitButton} onClick={
-        () => {
-          dispatch(dropUser());
-          navigate("/")
-        }
-      }>Выйти
-      </button>
+      <button className={style.exitButton} onClick={exit}>Выйти</button>
     </div>
   );
 };

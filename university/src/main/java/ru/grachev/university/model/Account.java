@@ -19,15 +19,14 @@ public class Account {
     public String login;
     public String password;
     public String email;
-    public String role ;
+    public String role;
     public LocalDate registerDate;
     public String name;
     public String surname;
     public String patronymic;
     public Integer score;
 
-    public Account(Account account)
-    {
+    public Account(Account account) {
         this.login = account.login;
         this.password = account.password;
         this.email = account.email;
@@ -35,7 +34,6 @@ public class Account {
         this.name = account.name;
         this.surname = account.surname;
         this.patronymic = account.patronymic;
-        this.role = "user";
         this.score = 0;
     }
 }

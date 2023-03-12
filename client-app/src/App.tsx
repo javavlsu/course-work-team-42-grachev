@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "./component/Layout/Layout";
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import Main from "./pages/Main/Main";
 import PATHS from "./data/paths";
 import NotFound from "./pages/NotFound/NotFound";
@@ -19,14 +19,17 @@ function App() {
 
   React.useEffect(() => {
     const login = localStorage.getItem("login")
-    if (login != null) axios.get("/api/account/roleByLogin?login=" + login)
-      .then(response => {
-        if (response.data === "err") {
-          dispatch(dropUser());
-        } else {
-          dispatch(setUser({login: login, role: response.data}))
-        }
-      })
+    if (login != null) {
+      axios.get("/api/account/rolebylogin?login=" + login)
+        .then(response => {
+          if (response.data === "err") {
+            dispatch(dropUser());
+          } else {
+            dispatch(setUser({login: login, role: response.data}))
+          }
+        })
+    }
+
   }, [])
 
   return (
@@ -37,9 +40,9 @@ function App() {
           <Route path={PATHS.MAIN} element={<Layout/>}>
             <Route index element={<Main/>}/>
             <Route path={PATHS.LOGIN} element={<Login/>}/>
-            <Route path={PATHS.PROFILE+"/:login"} element={<Profile/>}/>
-            <Route path={PATHS.COURSE+"/:id"} element={<Course/>}/>
-            <Route path={PATHS.TESTS+"/:testid"} element={<Test/>}/>
+            <Route path={PATHS.PROFILE + "/:login"} element={<Profile/>}/>
+            <Route path={PATHS.COURSE + "/:id"} element={<Course/>}/>
+            <Route path={PATHS.TESTS + "/:testid"} element={<Test/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Route>
         </Routes>

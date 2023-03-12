@@ -16,7 +16,9 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+    @ManyToOne
+    public Test test;
     public String question;
-    @OneToMany
+    @OneToMany(mappedBy = "question")
     public List<Answer> answers;
 }

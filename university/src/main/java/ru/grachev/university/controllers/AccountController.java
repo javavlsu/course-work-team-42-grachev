@@ -1,20 +1,14 @@
 package ru.grachev.university.controllers;
 
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.grachev.university.model.Account;
 import ru.grachev.university.service.AccountServices;
 
-import java.util.Objects;
-
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/account")
+@RequiredArgsConstructor
 public class AccountController {
 
     private final AccountServices accountServices;
@@ -27,10 +21,26 @@ public class AccountController {
 
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody Account logAccount) {
-        String role = accountServices.getRoleByLoginAndPassword(logAccount.login,logAccount.password);
-        return !Objects.equals(role, "err")
-                ? ResponseEntity.accepted().body(role)
-                : ResponseEntity.ok(role);
+        String role = accountServices.getRole(logAccount.login, logAccount.password);
+        if (role != null) {
+            return ResponseEntity.accepted().body(role);
+        }
+        return ResponseEntity.ok("err");
     }
 
+    @GetMapping("rolebylogin")
+    public ResponseEntity<String> getRoleByLogin(@RequestParam("login") String login) {
+        String role = accountServices.getRole(login);
+        return role != null ? ResponseEntity.ok(role) : ResponseEntity.ok("err");
+    }
+
+    @GetMapping("existslogin")
+    public ResponseEntity<Boolean> isLoginExist(@RequestParam("login") String login) {
+        return ResponseEntity.ok(accountServices.isLoginExists(login));
+    }
+
+    @GetMapping("existsemail")
+    public ResponseEntity<Boolean> isEmailExist(@RequestParam("email") String email) {
+        return ResponseEntity.ok(accountServices.isEmailExists(email));
+    }
 }

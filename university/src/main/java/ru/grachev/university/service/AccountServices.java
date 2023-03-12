@@ -11,10 +11,27 @@ public class AccountServices {
 
     private final AccountRepository accountRepository;
 
-    public Account create(Account account) { return accountRepository.save(account); }
+    public Account create(Account account) {
+        return accountRepository.save(account);
+    }
 
-    public String getRoleByLoginAndPassword(String login, String password) {
+    public String getRole(String login, String password) {
         Account account = accountRepository.findFirstByLoginAndPassword(login, password);
-        return account != null ? account.role : "err";
+        return account != null ? account.role : null;
+    }
+
+    public String getRole(String login) {
+        Account account = accountRepository.findFirstByLogin(login);
+        return account != null ? account.role : null;
+    }
+
+    public Boolean isLoginExists(String login) {
+        Integer count = accountRepository.countByLogin(login);
+        return count == 0;
+    }
+
+    public Boolean isEmailExists(String email) {
+        Integer count = accountRepository.countByEmail(email);
+        return count == 0;
     }
 }

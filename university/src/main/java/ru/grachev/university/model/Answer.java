@@ -14,6 +14,8 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+    @ManyToOne
+    public Question question;
     public String text;
     public Boolean isCorrect;
 }
