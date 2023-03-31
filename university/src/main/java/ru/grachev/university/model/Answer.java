@@ -1,5 +1,6 @@
 package ru.grachev.university.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     @ManyToOne
+    @JsonIgnore
     public Question question;
     public String text;
     public Boolean isCorrect;

@@ -1,5 +1,6 @@
 package ru.grachev.university.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     @ManyToOne
+    @JsonIgnore
     public Course course;
     public String theme;
     @OneToMany(mappedBy = "test")
