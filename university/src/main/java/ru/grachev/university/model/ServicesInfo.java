@@ -20,4 +20,11 @@ public class ServicesInfo {
     public int programsCount;
     public int teachersCount;
     public int graduatesCount;
+
+    public ServicesInfo(LocalDate openDoorsDate, int programsCount, int teachersCount, int graduatesCount) {
+        this.openDoorsDate = openDoorsDate;
+        this.programsCount = programsCount;
+        this.teachersCount = teachersCount;
+        this.graduatesCount = graduatesCount;
+    }
 }
