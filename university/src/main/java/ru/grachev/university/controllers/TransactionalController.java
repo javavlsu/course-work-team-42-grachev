@@ -54,7 +54,7 @@ public class TransactionalController {
         transactionalService.createAppealForFail4();
 
         if (str != null) throw new RuntimeException("test");
-        
+
         return "klass";
     }
 }

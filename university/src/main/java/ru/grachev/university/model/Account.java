@@ -35,5 +35,6 @@ public class Account {
         this.surname = account.surname;
         this.patronymic = account.patronymic;
         this.score = 0;
+        this.role = "user";
     }
 }

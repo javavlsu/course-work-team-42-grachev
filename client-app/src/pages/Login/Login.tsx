@@ -18,8 +18,8 @@ type FormRegisterValueType = {
 }
 
 type FormLoginValueType = {
-  logLogin: string;
-  logPassword: string;
+  username: string;
+  password: string;
 }
 
 
@@ -36,15 +36,19 @@ const Login = () => {
   } = useForm<FormLoginValueType>();
 
   const onLoginSubmit: SubmitHandler<FormLoginValueType> = async (data) => {
-    const accountRole = await axios.post("/api/account/login", {
-      login: data.logLogin,
-      password: crypto.SHA1(data.logPassword).toString()
-    }).then(({data}) => data);
-    if (accountRole === "err") dispatch(dropUser())
-    else {
-      localStorage.setItem("login", data.logLogin);
-      document.cookie = `role=${accountRole};`
-      dispatch(setUser({login: data.logLogin, role: accountRole}));
+
+    const formData = new FormData()
+
+    formData.append('username', data.username)
+    formData.append('password', data.password)
+
+    const response = await axios.post("/api/account/login", formData)
+    if (response.status === 400) {
+      dispatch(dropUser())
+    } else {
+      localStorage.setItem("login", data.username);
+      document.cookie = `role=${response.data};`
+      dispatch(setUser({login: data.username, role: response.data}));
       loginReset();
       navigate("/");
     }
@@ -102,12 +106,12 @@ const Login = () => {
         <form onSubmit={loginHandleSubmit(onLoginSubmit)}>
           <input type="text"
                  className={style.input}
-                 {...loginRegister("logLogin", {required: true})}
+                 {...loginRegister("username", {required: true})}
                  placeholder={"Логин"}
                  autoComplete={"off"}/>
           <input type="password"
                  className={style.input}
-                 {...loginRegister("logPassword", {required: true})}
+                 {...loginRegister("password", {required: true})}
                  placeholder={"Пароль"}
                  autoComplete={"off"}/>
           <button type="submit" className={style.submit}>Войти</button>
