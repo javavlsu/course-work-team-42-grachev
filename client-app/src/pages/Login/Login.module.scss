@@ -1,0 +1,109 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: 650px;
+  padding-top: 150px;
+}
+
+#login, #register {
+  display: none;
+}
+
+.radioButtons {
+  width: 560px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & label {
+    width: 50%;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 40px;
+    text-align: center;
+    color: #000000;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    transition: border-bottom-color 0.3s linear;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+input#login:checked ~ label#loginLabel,
+input#register:checked ~ label#registerLabel {
+  border-bottom: 2px solid #27AAE1;
+  transition: border-bottom-color 0.3s linear;
+}
+
+.loginForm, .registerForm {
+  display: none;
+  padding-top: 50px;
+
+  & > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.radioButtons:has(input#login:checked) ~ .loginForm {
+  display: block;
+}
+
+.radioButtons:has(input#register:checked) ~ .registerForm {
+  display: block;
+}
+
+input.input {
+  width: 380px;
+  height: 50px;
+  background: #DDDFE6;
+  border-radius: 6px;
+  outline: none;
+  margin: 10px 0;
+  padding-left: 19px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #00093C;
+  border: 2px solid transparent;
+  &:hover {
+    background: rgba(221, 223, 230, 0.7);
+    border: 1px solid rgba(39, 170, 225, 0.5);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  &:focus {
+    border: 2px solid #27AAE1;
+  }
+  &::placeholder {
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4F4F4F;
+  }
+}
+
+button.submit {
+  height: 50px;
+  padding: 0 60px;
+  background: #F7941D;
+  border-radius: 6px;
+  border: none;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 26px;
+  color: #FFFFFF;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  &:hover {
+    background: #FFAE4D;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  &:active {
+    box-shadow: none;
+    transform: translate(1px,1px);
+  }
+}

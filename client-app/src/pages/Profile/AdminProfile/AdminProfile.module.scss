@@ -1,0 +1,32 @@
+button.exitButton {
+  font-family: "Montserrat", sans-serif;
+  margin-top: 7px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #DF5E42;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+.table {
+  border-spacing: 0;
+  td {
+    padding: 10px;
+    border: 1px solid #515151;
+  }
+  thead {
+    background: gray;
+  }
+  tbody>tr:nth-child(even) {
+    background: rgba(81, 81, 81, 0.3);
+  }
+}
+
+.userItem {
+  list-style-type: none;
+  .userItem__login {
+    margin-right: 10px;
+  }
+}
