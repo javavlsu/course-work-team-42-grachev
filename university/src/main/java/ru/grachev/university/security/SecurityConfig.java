@@ -31,6 +31,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests()
+                    .requestMatchers(
+                            "/api/account/register",
+                            "/api/account/existsemail",
+                            "/api/account/existsemail"
+                    ).permitAll()
+                    .requestMatchers("/api/account/**").authenticated()
+                    .requestMatchers("/api/admin/**").hasAuthority("admin")
                     .requestMatchers("/**").permitAll()
                     .and()
                 .logout(logout -> logout.logoutUrl("/api/account/logout"))

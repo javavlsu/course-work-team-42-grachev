@@ -16,19 +16,13 @@ public class AdminServices {
 
     private final AccountRepository accountRepository;
 
-    public List<AdminTableUsersView> getUsersWithoutRole() {
-        List<Account> usersWithoutRole = accountRepository.findAccountsByRoleIsNull();
-
-        List<AdminTableUsersView> adminViewUsers = new ArrayList<>();
-        for (Account user : usersWithoutRole) {
-            adminViewUsers.add(new AdminTableUsersView(user.login, user.registerDate));
-        }
-        return adminViewUsers;
-    }
-
     public void setUserRole(SetRoleModel model) {
         Account account = accountRepository.findFirstByLogin(model.login);
         account.role = model.role;
         accountRepository.save(account);
+    }
+
+    public List<Account> getAllUsers() {
+        return accountRepository.findAll();
     }
 }

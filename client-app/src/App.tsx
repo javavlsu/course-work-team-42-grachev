@@ -20,13 +20,12 @@ function App() {
   React.useEffect(() => {
     const login = localStorage.getItem("login")
     if (login != null) {
-      axios.get("/api/account/rolebylogin?login=" + login)
-        .then(response => {
-          if (response.data === "err") {
-            dispatch(dropUser());
-          } else {
-            dispatch(setUser({login: login, role: response.data}))
-          }
+      axios.get("/api/account/getrole")
+        .then(({data}) => {
+          dispatch(setUser({login: login, role: data}))
+        })
+        .catch(() => {
+          dispatch(dropUser());
         })
     }
 
