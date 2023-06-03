@@ -1,13 +1,15 @@
 package ru.grachev.university.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.grachev.university.model.Course;
 import ru.grachev.university.service.CourseServices;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -23,18 +25,22 @@ public class CourseController {
     }
 
     @GetMapping("toprofilepage")
-    public ResponseEntity<List<Course>> getCourseToProfile(HttpServletRequest request) {
-        return ResponseEntity.ok(courseServices.getAllCoursesWithoutTests());
+    public List<Course> getCourseToProfile() {
+        return courseServices.getAllCoursesWithoutTests();
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Course> getCourseById(
-            @CookieValue(name = "login", required = false) String login,
+    public Course getCourseById(
+            Authentication auth,
             @PathVariable String id
     ) {
-        if (login == null) {
-            return ResponseEntity.ok(courseServices.getCourseWithAvailableTest(id));
-        }
-        return ResponseEntity.ok(courseServices.getCourseWithAvailableTestWithStudent(id, login));
+        return auth.getName() == null
+                ? courseServices.getCourseWithAvailableTest(id)
+                : courseServices.getCourseWithAvailableTestWithStudent(id, auth.getName());
+    }
+
+    @GetMapping("fillcourses")
+    public List<Course> fillCourses() {
+        return courseServices.fillCourses();
     }
 }

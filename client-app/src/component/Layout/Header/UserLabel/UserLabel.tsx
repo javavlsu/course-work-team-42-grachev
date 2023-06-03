@@ -12,7 +12,7 @@ const UserLabel = () => {
   const [userStyle, setUserStyle] = React.useState<string>("");
 
   React.useEffect(()=> {
-    if (user.login) axios.get(`/api/user/getname/${user.login}`).then(({data}) => setName(data));
+    if (user.login) axios.get(`/api/student/getname`).then(({data}) => setName(data));
     switch (user.role) {
       case "student":
         setUserStyle(style.student);

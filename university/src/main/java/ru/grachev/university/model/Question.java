@@ -23,4 +23,10 @@ public class Question {
     public String question;
     @OneToMany(mappedBy = "question")
     public List<Answer> answers;
+
+    public Question(Test test, String question, List<Answer> answers) {
+        this.test = test;
+        this.question = question;
+        this.answers = answers;
+    }
 }

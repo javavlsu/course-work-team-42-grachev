@@ -17,17 +17,13 @@ public class ServiceController {
     private final AppealServices appealServices;
 
     @GetMapping("servicesinfo")
-    public ResponseEntity<?> getServicesInfo() {
-        final ServicesInfo lastInfo = servicesInfoService.getLastInfo();
-        return lastInfo != null
-                ? ResponseEntity.ok(lastInfo)
-                : ResponseEntity.ok().body(HttpStatus.NOT_FOUND);
+    public ServicesInfo getServicesInfo() {
+        return servicesInfoService.getLastInfo();
     }
 
     @PostMapping("appeal")
-    public ResponseEntity<Appeal> postAppeal(@RequestBody Appeal footerAppeal) {
-        Appeal newAppeal = appealServices.create(footerAppeal);
-        return ResponseEntity.ok(newAppeal);
+    public Appeal postAppeal(@RequestBody Appeal footerAppeal) {
+        return appealServices.create(footerAppeal);
     }
 
 }

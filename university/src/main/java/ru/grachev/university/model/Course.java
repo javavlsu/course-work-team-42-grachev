@@ -21,4 +21,10 @@ public class Course {
     public String teacher;
     @OneToMany(mappedBy = "course")
     public List<Test> tests;
+
+    public Course(String title, String teacher, List<Test> tests) {
+        this.title = title;
+        this.teacher = teacher;
+        this.tests = tests;
+    }
 }

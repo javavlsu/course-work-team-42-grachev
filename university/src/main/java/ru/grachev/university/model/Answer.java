@@ -20,4 +20,10 @@ public class Answer {
     public Question question;
     public String text;
     public Boolean isCorrect;
+
+    public Answer(Question question, String text, Boolean isCorrect) {
+        this.question = question;
+        this.text = text;
+        this.isCorrect = isCorrect;
+    }
 }

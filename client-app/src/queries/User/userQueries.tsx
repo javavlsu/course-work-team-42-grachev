@@ -4,12 +4,12 @@ import {StudentTypes, UserTypes} from "./studentTypes";
 
 const getStudentByLogin = (login: string): Promise<StudentTypes> =>
   axios
-    .get(`/api/user/getStudentByLogin/${login}`)
+    .get(`/api/student/getStudentByLogin`)
     .then(({data}) => data);
 
 const getUserByLogin = (login: string): Promise<UserTypes> =>
   axios
-    .get(`/api/user/${login}`)
+    .get(`/api/student`)
     .then(({data}) => data);
 
 export const useStudentByLogin = (login: string): UseQueryResult<StudentTypes> => {

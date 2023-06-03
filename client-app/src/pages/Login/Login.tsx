@@ -40,7 +40,7 @@ const Login = () => {
     const formData = new FormData()
 
     formData.append('username', data.username)
-    formData.append('password', data.password)
+    formData.append('password', crypto.SHA1(data.password).toString())
 
     const response = await axios.post("/api/account/login", formData)
     if (response.status === 400) {

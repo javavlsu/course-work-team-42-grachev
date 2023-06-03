@@ -22,7 +22,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     @Bean
-    //authentication
     public UserDetailsService userDetailsService() {
         return new UserInfoDetailsService();
     }
@@ -34,10 +33,22 @@ public class SecurityConfig {
                     .requestMatchers(
                             "/api/account/register",
                             "/api/account/existsemail",
-                            "/api/account/existsemail"
+                            "/api/account/existslogin"
                     ).permitAll()
                     .requestMatchers("/api/account/**").authenticated()
+
                     .requestMatchers("/api/admin/**").hasAuthority("admin")
+
+                    .requestMatchers("/api/courses/fillcourses").hasAuthority("admin")
+                    .requestMatchers("/api/courses/**").hasAnyAuthority("student","teacher")
+
+                    .requestMatchers(
+                      "/api/servicesinfo",
+                      "/api/appeal"
+                    ).permitAll()
+
+                    .requestMatchers("/api/student/**").hasAuthority("student")
+
                     .requestMatchers("/**").permitAll()
                     .and()
                 .logout(logout -> logout.logoutUrl("/api/account/logout"))

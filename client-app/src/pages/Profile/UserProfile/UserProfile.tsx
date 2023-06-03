@@ -45,7 +45,7 @@ const UserProfile: React.FC<UserProfileTypes> = ({user}) => {
 
   const onUpdateSubmit: SubmitHandler<UpdateFormTypes> = async (data) => {
     if (data.newPassword !== "") data.newPassword = crypto.SHA1(data.newPassword).toString()
-    await axios.post("/api/user/updatestudentinfo", {login: user.login, ...data}).then(({data}) => console.log(data));
+    await axios.post("/api/student/updatestudentinfo", {login: user.login, ...data}).then(({data}) => console.log(data));
   }
 
 

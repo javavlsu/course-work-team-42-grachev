@@ -28,4 +28,13 @@ public class Test {
     public List<Student> passedStudents;
     public LocalDate endDate;
     public Boolean isAvailable;
+
+    public Test(Course course, String theme, List<Question> questions, List<Student> passedStudents, LocalDate endDate, Boolean isAvailable) {
+        this.course = course;
+        this.theme = theme;
+        this.questions = questions;
+        this.passedStudents = passedStudents;
+        this.endDate = endDate;
+        this.isAvailable = isAvailable;
+    }
 }
