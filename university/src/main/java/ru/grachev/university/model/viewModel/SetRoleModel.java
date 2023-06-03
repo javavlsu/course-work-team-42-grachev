@@ -8,4 +8,6 @@ import lombok.Data;
 public class SetRoleModel {
     public String login;
     public String role;
+    public String group;
+    public String department;
 }

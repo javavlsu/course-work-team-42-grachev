@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './Profile.module.scss'
 
 import UserProfile from './UserProfile/UserProfile'
@@ -6,8 +6,13 @@ import AdminProfile from './AdminProfile/AdminProfile'
 import { UserStore } from '../../mobx'
 import { observer } from 'mobx-react-lite'
 import StudentProfile from './StudentProfile/StudentProfile'
+import { fetchAccountData } from '../../util'
 
 const Profile = () => {
+  useEffect(() => {
+    fetchAccountData()
+  }, [])
+
   return (
     <div className={style.wrapper}>
       {(UserStore.role === 'user') && <UserProfile/>}

@@ -1,12 +1,8 @@
 package ru.grachev.university.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.grachev.university.model.Account;
-import ru.grachev.university.model.viewModel.AdminTableUsersView;
 import ru.grachev.university.model.viewModel.SetRoleModel;
 import ru.grachev.university.service.AdminServices;
 
@@ -25,7 +21,6 @@ public class AdminController {
         return adminServices.getAllUsers();
     }
 
-    //TODO: привязывать студента для чела при смене роли
     @PostMapping("setuserrole")
     public void setUserRoleByLogin(@RequestBody SetRoleModel model) {
         adminServices.setUserRole(model);
