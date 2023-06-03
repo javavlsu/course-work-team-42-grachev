@@ -1,9 +1,9 @@
-import React from "react";
-import style from "./Header.module.scss";
-import MenuIcon from "../../SvgIcons/MenuIcon";
-import {Link} from "react-router-dom";
-import PATHS from "../../../data/paths";
-import UserLabel from "./UserLabel/UserLabel";
+import React from 'react'
+import style from './Header.module.scss'
+import MenuIcon from '../../SvgIcons/MenuIcon'
+import { Link } from 'react-router-dom'
+import PATHS from '../../../data/paths'
+import UserLabel from './UserLabel/UserLabel'
 
 const Header = () => {
   return (
@@ -41,7 +41,7 @@ const Header = () => {
         </ul>
       </nav>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

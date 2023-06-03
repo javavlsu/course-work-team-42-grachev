@@ -1,32 +1,29 @@
-import React from "react";
-import style from "./ContactForm.module.scss";
-import clsx from "clsx";
-import Input from "../../../ui/Input/Input";
-import Button from "../../../ui/Button/Button";
-import {SubmitHandler, useForm} from "react-hook-form";
-import axios from "axios";
+import React from 'react'
+import style from './ContactForm.module.scss'
+import clsx from 'clsx'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import axios from 'axios'
 
 type ContactFormTypes = {
-  className?: string;
-};
-
-type FormValueType = {
-  name: string;
-  phoneNumber: string;
-  email: string;
+  className?: string
 }
 
-const ContactForm: React.FC<ContactFormTypes> = ({className}) => {
+type FormValueType = {
+  name: string
+  phoneNumber: string
+  email: string
+}
 
+const ContactForm: React.FC<ContactFormTypes> = ({ className }) => {
   const {
     register,
     handleSubmit,
     reset
-  } = useForm<FormValueType>();
+  } = useForm<FormValueType>()
 
   const onFormSubmit: SubmitHandler<FormValueType> = async (data) => {
-    await axios.post("/api/appeal", data);
-    reset();
+    await axios.post('/api/appeal', data)
+    reset()
   }
 
   return (
@@ -48,16 +45,16 @@ const ContactForm: React.FC<ContactFormTypes> = ({className}) => {
             <input type="text"
                    placeholder="Ваше имя"
                    className={style.input}
-                   {...register("name", {required: true})} />
+                   {...register('name', { required: true })} />
             <input type="text"
                    placeholder="Ваш телефон"
                    className={clsx(style.input)}
                    pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$"
-                   {...register("phoneNumber", {required: true})} />
+                   {...register('phoneNumber', { required: true })} />
             <input type="email"
                    placeholder="Ваш e-mail"
                    className={clsx(style.marginTop20, style.input)}
-                   {...register("email", {required: true})} />
+                   {...register('email', { required: true })} />
             <p className={clsx(style.agree, style.marginTop20)}>
               Нажимая на кнопку, я соглашаюсь на обработку персональных данных и
               с правилами пользования Платформой
@@ -67,7 +64,7 @@ const ContactForm: React.FC<ContactFormTypes> = ({className}) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ContactForm;
+export default ContactForm

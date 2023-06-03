@@ -1,19 +1,18 @@
-import React from 'react';
-import style from "./Course.module.scss"
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {useAppSelector} from "../../redux/hooks";
-import {useCoursesById} from "../../queries/Courses/coursesQueries";
-import PATHS from "../../data/paths";
-import clsx from "clsx";
+import React from 'react'
+import style from './Course.module.scss'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useCoursesById } from '../../queries/Courses/coursesQueries'
+import PATHS from '../../data/paths'
+import clsx from 'clsx'
+import { UserStore } from '../../mobx'
 
 const Course = () => {
-  const {id} = useParams();
-  const navigate = useNavigate();
-  const user = useAppSelector(state => state.user);
-  const {data: course} = useCoursesById(id as string);
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { data: course } = useCoursesById(id as string)
 
   React.useEffect(() => {
-    if (user.login === undefined || user.login === "") navigate("/")
+    if (UserStore.login === '') navigate('/')
   }, [])
 
   return (
@@ -25,8 +24,8 @@ const Course = () => {
       <div className={style.main}>
         <ul className={style.testList}>
           {course?.tests.map((item) =>
-            <li className={clsx(style.testItem, "greenCard")}>
-              <Link to={`${PATHS.TESTS}/${item.id}`} key={`test${item.id + item.theme}`}>
+            <li className={clsx(style.testItem, 'greenCard')} key={item.id}>
+              <Link to={`${PATHS.TESTS}/${item.id}`} key={`test${item.id}${item.theme}`}>
                 {item.theme}
               </Link>
             </li>
@@ -34,6 +33,6 @@ const Course = () => {
         </ul>
       </div>
     </div>
-  );
-};
-export default Course;
+  )
+}
+export default Course

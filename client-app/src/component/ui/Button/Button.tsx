@@ -1,15 +1,15 @@
-import React from "react";
-import style from "./Button.module.scss";
-import clsx from "clsx";
+import React from 'react'
+import style from './Button.module.scss'
+import clsx from 'clsx'
 
 type ButtonTypes = {
-  text: string;
-  backgroundColor: string;
-  color: string;
-  width?: number;
-  type?: "button" | "submit" | "reset" | undefined;
-  className?: string;
-};
+  text: string
+  backgroundColor: string
+  color: string
+  width?: number
+  type?: 'button' | 'submit' | 'reset' | undefined
+  className?: string
+}
 
 const Button: React.FC<ButtonTypes> = ({
   text,
@@ -17,21 +17,21 @@ const Button: React.FC<ButtonTypes> = ({
   color,
   width = 210,
   type,
-  className,
+  className
 }) => {
   return (
     <button
       className={clsx(style.button, className)}
       type={type}
       style={{
-        width: width,
+        width,
         background: backgroundColor,
-        color: color,
+        color
       }}
     >
       {text}
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

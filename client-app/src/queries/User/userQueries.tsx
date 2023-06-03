@@ -1,17 +1,18 @@
-import {useQuery, UseQueryResult} from "@tanstack/react-query";
-import axios from "axios";
-import {StudentTypes, UserTypes} from "./studentTypes";
+import { useQuery, type UseQueryResult } from '@tanstack/react-query'
+import axios from 'axios'
+import { type StudentTypes, type UserTypes } from './studentTypes'
 
-const getStudentByLogin = (login: string): Promise<StudentTypes> =>
-  axios
-    .get(`/api/student/getStudentByLogin`)
-    .then(({data}) => data);
+const getAccount = async (): Promise<StudentTypes> =>
+  await axios
+    .get('/api/account')
+    .then(({ data }) => data)
 
-const getUserByLogin = (login: string): Promise<UserTypes> =>
-  axios
-    .get(`/api/student`)
-    .then(({data}) => data);
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getUserByLogin = async (login: string): Promise<UserTypes> =>
+  await axios
+    .get('/api/student')
+    .then(({ data }) => data)
 
-export const useStudentByLogin = (login: string): UseQueryResult<StudentTypes> => {
-  return useQuery<StudentTypes>(["studentByLogin", login], () => getStudentByLogin(login));
+export const useAccount = (): UseQueryResult<StudentTypes> => {
+  return useQuery<StudentTypes>(['studentByLogin'], async () => await getAccount())
 }

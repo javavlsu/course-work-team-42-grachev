@@ -1,24 +1,27 @@
-import React from 'react';
-import style from "./Test.module.scss"
-import {useNavigate, useParams} from "react-router-dom";
-import {useTestById} from "../../queries/Courses/coursesQueries";
-import axios from "axios";
-import serializer from "../../util/form-serialize"
-import {useAppSelector} from "../../redux/hooks";
+import React from 'react'
+import style from './Test.module.scss'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useTestById } from '../../queries/Courses/coursesQueries'
+import serializer from '../../util/form-serialize'
+import axios from 'axios'
 
 const Test = () => {
-  const {testid} = useParams();
-  const {data: test} = useTestById(testid as string);
-  const user = useAppSelector(state => state.user);
-  const navigate = useNavigate();
+  const { testid } = useParams()
+  const { data: test } = useTestById(testid as string)
 
-  function onsubmit(e: any) {
-    e.preventDefault();
-    const result = {testId:[testid], userLogin:[user.login], ...serializer(e.target)}
+  const navigate = useNavigate()
+
+  function onsubmit (e: any) {
+    e.preventDefault()
+    const result = {
+      testId: [testid],
+      ...serializer(e.target)
+    }
+    console.log(result)
     axios
-      .post("/api/courses/test", result)
+      .post('/api/courses/test', result)
       .then(r => r.data)
-    navigate("/")
+    navigate('/')
   }
 
   return (
@@ -26,10 +29,10 @@ const Test = () => {
       <h1 className={style.title__title}>{test?.theme}</h1>
       <form onSubmit={onsubmit}>
         {test?.questions.map((item) =>
-          <fieldset key={`question${item.id + item.question}`}>
+          <fieldset key={`question${item.id}${item.question}`}>
             <legend>{item.question}</legend>
             {item.answers.map((answer) =>
-              <label>
+              <label key={answer.id}>
                 {answer.text}
                 <input type="checkbox" name={`${item.id}`} id={`question${item.id}_${answer.id}`} value={answer.id}/>
               </label>
@@ -39,7 +42,7 @@ const Test = () => {
         <input type="submit" value="Сдать"/>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Test;
+export default Test

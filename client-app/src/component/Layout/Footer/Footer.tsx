@@ -1,8 +1,8 @@
-import React from "react";
-import style from "./Footer.module.scss";
-import ContactForm from "./ContactForm/ContactForm";
-import {abiturient, student, aspirant, info} from "../../../data/footerInfo";
-import {Link} from "react-router-dom";
+import React from 'react'
+import style from './Footer.module.scss'
+import ContactForm from './ContactForm/ContactForm'
+import { abiturient, student, aspirant, info } from '../../../data/footerInfo'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
@@ -57,7 +57,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

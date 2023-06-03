@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SetRoleModel {
-    public String login;
-    public String role;
+public class StudentInfo {
+    public String department;
+    public String group;
 }

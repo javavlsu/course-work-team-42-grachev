@@ -1,15 +1,15 @@
-export default function serialize(form) {
-  if (!form || form.nodeName !== "FORM") {
-    return;
+export default function serialize (form) {
+  if (!form || form.nodeName !== 'FORM') {
+    return
   }
-  let result = {};
+  const result = {}
   for (let i = 0; i < form.elements.length - 1; i++) {
-    if (form.elements[i].name === "") continue
+    if (form.elements[i].name === '') continue
     result[form.elements[i].name] = []
   }
   for (let i = 0; i < form.elements.length - 1; i++) {
-    if (form.elements[i].name === "") {
-      continue;
+    if (form.elements[i].name === '') {
+      continue
     }
     switch (form.elements[i].type) {
       case 'checkbox':
@@ -17,13 +17,10 @@ export default function serialize(form) {
         if (form.elements[i].checked) {
           result[form.elements[i].name].push(encodeURIComponent(form.elements[i].value))
         } else {
-          result[form.elements[i].name].push("")
+          result[form.elements[i].name].push('')
         }
-        break;
+        break
     }
   }
-  return result;
+  return result
 }
-
-
-

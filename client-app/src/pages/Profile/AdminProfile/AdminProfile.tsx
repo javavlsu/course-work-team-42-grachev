@@ -1,23 +1,15 @@
-import React from 'react';
-import style from "./AdminProfile.module.scss"
-import {dropUser} from "../../../redux/userSlice";
-import {useAppDispatch} from "../../../redux/hooks";
-import {useNavigate} from "react-router-dom";
-import axios from "axios";
-import {AccountGrid} from "./components";
-
-type userWithoutRole = {
-  login: string;
-  registerDate: Date;
-};
+import React from 'react'
+import style from './AdminProfile.module.scss'
+import { useNavigate } from 'react-router-dom'
+import { AccountGrid } from './components'
+import { UserStore } from '../../../mobx'
 
 const AdminProfile = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const exit = () => {
-    dispatch(dropUser());
-    navigate("/")
+    UserStore.clear()
+    navigate('/')
   }
 
   return (
@@ -25,7 +17,7 @@ const AdminProfile = () => {
       <button className={style.exitButton} onClick={exit}>Выйти</button>
       <AccountGrid/>
     </div>
-  );
-};
+  )
+}
 
-export default AdminProfile;
+export default AdminProfile

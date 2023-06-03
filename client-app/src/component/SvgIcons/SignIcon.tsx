@@ -1,11 +1,11 @@
-import React from "react";
-import { SvgIconProp } from "./types/SvgIcons";
+import React from 'react'
+import { type SvgIconProp } from './types/SvgIcons'
 
 const SignIcon: React.FC<SvgIconProp> = ({
-  fillColor = "currentColor",
-  className = "",
+  fillColor = 'currentColor',
+  className = '',
   width = 10,
-  height = 7,
+  height = 7
 }) => {
   return (
     <div className={className}>
@@ -24,7 +24,7 @@ const SignIcon: React.FC<SvgIconProp> = ({
         />
       </svg>
     </div>
-  );
-};
+  )
+}
 
-export default SignIcon;
+export default SignIcon

@@ -1,47 +1,39 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import axios from "axios";
-import {CourseInProfileTypes, CoursesTypes, TestTypes} from "./coursesTypes";
+import { useQuery, type UseQueryResult } from '@tanstack/react-query'
+import axios from 'axios'
+import { type CourseInProfileTypes, type CoursesTypes, type TestTypes } from './coursesTypes'
 
-
-const getCourses = (): Promise<CoursesTypes> =>
-  axios
-    .get(`/api/courses`)
-    .then(({ data }) => data);
+const getCourses = async (): Promise<CoursesTypes> =>
+  await axios
+    .get('/api/courses')
+    .then(({ data }) => data)
 
 export const useCourses = (): UseQueryResult<CoursesTypes> => {
-  return useQuery<CoursesTypes>(["courses"], getCourses)
+  return useQuery<CoursesTypes>(['courses'], getCourses)
 }
 
-
-
-const getCoursesToProfilePage = (): Promise<CourseInProfileTypes[]> =>
-  axios
-    .get(`/api/courses/toprofilepage`)
-    .then(({ data }) => data);
+const getCoursesToProfilePage = async (): Promise<CourseInProfileTypes[]> =>
+  await axios
+    .get('/api/courses/toprofilepage')
+    .then(({ data }) => data)
 
 export const useCoursesInProfile = (): UseQueryResult<CourseInProfileTypes[]> => {
-  return useQuery<CourseInProfileTypes[]>(["coursesInProfile"], getCoursesToProfilePage)
+  return useQuery<CourseInProfileTypes[]>(['coursesInProfile'], getCoursesToProfilePage)
 }
 
-
-
-
-const getCoursesById = (id:string): Promise<CoursesTypes> =>
-  axios
+const getCoursesById = async (id: string): Promise<CoursesTypes> =>
+  await axios
     .get(`/api/courses/${id}`)
-    .then(({ data }) => data);
+    .then(({ data }) => data)
 
-export const useCoursesById = (id:string): UseQueryResult<CoursesTypes> => {
-  return useQuery<CoursesTypes>(["coursesById",id], ()=>getCoursesById(id))
+export const useCoursesById = (id: string): UseQueryResult<CoursesTypes> => {
+  return useQuery<CoursesTypes>(['coursesById', id], async () => await getCoursesById(id))
 }
 
+const getTestById = async (id: string): Promise<TestTypes> =>
+  await axios
+    .get(`/api/courses/test/${id}`)
+    .then(({ data }) => data)
 
-
-const getTestById = (id:string): Promise<TestTypes> =>
-  axios
-    .get(`/api/courses/testbyid/${id}`)
-    .then(({ data }) => data);
-
-export const useTestById = (id:string): UseQueryResult<TestTypes> => {
-  return useQuery<TestTypes>(["testById",id], ()=>getTestById(id))
+export const useTestById = (id: string): UseQueryResult<TestTypes> => {
+  return useQuery<TestTypes>(['test', id], async () => await getTestById(id))
 }

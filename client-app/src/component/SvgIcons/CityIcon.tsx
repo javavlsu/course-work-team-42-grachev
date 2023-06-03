@@ -1,11 +1,11 @@
-import React from "react";
-import { SvgIconProp } from "./types/SvgIcons";
+import React from 'react'
+import { type SvgIconProp } from './types/SvgIcons'
 
 const CityIcon: React.FC<SvgIconProp> = ({
-  fillColor = "currentColor",
-  className = "",
+  fillColor = 'currentColor',
+  className = '',
   width = 17,
-  height = 20,
+  height = 20
 }) => {
   return (
     <div className={className}>
@@ -24,7 +24,7 @@ const CityIcon: React.FC<SvgIconProp> = ({
         <circle cx="8.5" cy="7.5" r="2.5" fill={fillColor} />
       </svg>
     </div>
-  );
-};
+  )
+}
 
-export default CityIcon;
+export default CityIcon

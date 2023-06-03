@@ -1,26 +1,25 @@
-import React from "react";
-import style from "./Main.module.scss";
-import clsx from "clsx";
-import {MONTHS} from "../../data/month";
-import {Link} from "react-router-dom";
-import PATHS from "../../data/paths";
-import {useServicesInfo} from "../../queries/ServicesInfo/servicesInfoQueries";
+import React from 'react'
+import style from './Main.module.scss'
+import clsx from 'clsx'
+import { MONTHS } from '../../data/month'
+import { Link } from 'react-router-dom'
+import PATHS from '../../data/paths'
+import { useServicesInfo } from '../../queries/ServicesInfo/servicesInfoQueries'
 
 const Main = () => {
-
-  const {data: servicesInfo} = useServicesInfo();
+  const { data: servicesInfo } = useServicesInfo()
 
   return (
     <div>
       <img
         src="/img/Main/mainHeader.png"
         alt="картинка"
-        width={"100%"}
+        width={'100%'}
         id={style.headerImage}
       />
       <div className={style.info}>
         <p>Актуальные знания от признанных практикующих специалистов</p>
-        {servicesInfo && <div className={style.numbers}>
+        {(servicesInfo != null) && <div className={style.numbers}>
             <span>{servicesInfo.programsCount}</span>
             <span>{servicesInfo.teachersCount}</span>
             <span>{servicesInfo.graduatesCount}</span>
@@ -29,11 +28,11 @@ const Main = () => {
       </div>
       <div className={style.links}>
         <Link to={PATHS.OPEN_DOORS}>
-          <div className={clsx(style.openDoors, "orangeCard")}>
+          <div className={clsx(style.openDoors, 'orangeCard')}>
             <div className={style.openDoors__date}>
               <p className={style.openDoors__day}>{servicesInfo?.openDoorsDate.getDate()}</p>
               <p className={style.openDoors__month}>
-                {servicesInfo && MONTHS[servicesInfo.openDoorsDate.getMonth()]}
+                {(servicesInfo != null) && MONTHS[servicesInfo.openDoorsDate.getMonth()]}
               </p>
             </div>
             <div className={style.openDoors__text}>
@@ -48,7 +47,7 @@ const Main = () => {
         </Link>
         <div className={style.linksDown}>
           <Link to={PATHS.PROGRAMS}>
-            <div className={clsx(style.programs, "blueCard")}>
+            <div className={clsx(style.programs, 'blueCard')}>
               <img src="/img/Main/programsMonitor.png" alt="монитор"/>
               <h4>Программы обучения</h4>
               <p>
@@ -61,19 +60,19 @@ const Main = () => {
           </Link>
           <div className={style.other}>
             <Link to={PATHS.NEWS}>
-              <div className={clsx(style.news, "greenCard")}>
+              <div className={clsx(style.news, 'greenCard')}>
                 <img src="/img/Main/news.png" alt="новости"/>
                 <h3>Новости</h3>
               </div>
             </Link>
             <Link to={PATHS.WORLD_IT}>
-              <div className={clsx(style.worldIT, "pinkCard")}>
+              <div className={clsx(style.worldIT, 'pinkCard')}>
                 <img src="/img/Main/circleWorld.png" alt="мирИТ"/>
                 <h3>Мир IT</h3>
               </div>
             </Link>
             <Link to={PATHS.TEST}>
-              <div className={clsx(style.test, "yellowCard")}>
+              <div className={clsx(style.test, 'yellowCard')}>
                 <img src="/img/Main/testImage.png" alt="тест"/>
                 <div className={style.test__text}>
                   <h3>Попробуй!</h3>
@@ -88,7 +87,7 @@ const Main = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main

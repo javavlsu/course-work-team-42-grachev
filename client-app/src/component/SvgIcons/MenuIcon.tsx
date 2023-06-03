@@ -1,11 +1,11 @@
-import React from "react";
-import { SvgIconProp } from "./types/SvgIcons";
+import React from 'react'
+import { type SvgIconProp } from './types/SvgIcons'
 
 const MenuIcon: React.FC<SvgIconProp> = ({
-  fillColor = "currentColor",
-  className = "",
+  fillColor = 'currentColor',
+  className = '',
   width = 20,
-  height = 17,
+  height = 17
 }) => {
   return (
     <div className={className}>
@@ -36,7 +36,7 @@ const MenuIcon: React.FC<SvgIconProp> = ({
         />
       </svg>
     </div>
-  );
-};
+  )
+}
 
-export default MenuIcon;
+export default MenuIcon

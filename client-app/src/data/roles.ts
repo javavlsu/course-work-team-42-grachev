@@ -1,16 +1,16 @@
-const toRURoles = (role:string):string => {
+const toRURoles = (role: string): string => {
   switch (role) {
-    case "admin":
-      return "Админ"
-    case "student":
-      return "Студент"
-    case "teacher":
-      return "Преподаватель"
-    case "user":
-      return "Пользователь"
+    case 'admin':
+      return 'Админ'
+    case 'student':
+      return 'Студент'
+    case 'teacher':
+      return 'Преподаватель'
+    case 'user':
+      return 'Пользователь'
     default:
-      return "Не указано"
+      return 'Не указано'
   }
 }
 
-export default toRURoles;
+export default toRURoles

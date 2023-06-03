@@ -1,57 +1,49 @@
-import axios from 'axios';
-import React from 'react';
-import {SubmitHandler, useForm} from 'react-hook-form';
-import {useNavigate} from 'react-router-dom';
-import style from "./Login.module.scss"
-import {useAppDispatch} from "../../redux/hooks";
-import {setUser, dropUser} from '../../redux/userSlice';
-
-import crypto from "crypto-js";
+import axios from 'axios'
+import React from 'react'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import style from './Login.module.scss'
+import { UserStore } from '../../mobx'
+import { fetchAccountData } from '../../util'
 
 type FormRegisterValueType = {
-  regLogin: string;
-  regEmail: string;
-  regPassword: string;
-  regName: string;
-  regSurname: string;
-  regPatronomic: string;
+  regLogin: string
+  regEmail: string
+  regPassword: string
+  regName: string
+  regSurname: string
+  regPatronymic: string
 }
 
 type FormLoginValueType = {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 
-
 const Login = () => {
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const {
     register: loginRegister,
     handleSubmit: loginHandleSubmit,
-    reset: loginReset,
-    setError: loginSetError
-  } = useForm<FormLoginValueType>();
+    reset: loginReset
+  } = useForm<FormLoginValueType>()
 
   const onLoginSubmit: SubmitHandler<FormLoginValueType> = async (data) => {
-
     const formData = new FormData()
 
     formData.append('username', data.username)
-    formData.append('password', crypto.SHA1(data.password).toString())
+    formData.append('password', data.password)
 
-    const response = await axios.post("/api/account/login", formData)
-    if (response.status === 400) {
-      dispatch(dropUser())
-    } else {
-      localStorage.setItem("login", data.username);
-      document.cookie = `role=${response.data};`
-      dispatch(setUser({login: data.username, role: response.data}));
-      loginReset();
-      navigate("/");
-    }
+    axios.post('/api/account/login', formData)
+      .then(() => {
+        loginReset()
+        fetchAccountData()
+        navigate('/')
+      })
+      .catch(() => {
+        UserStore.clear()
+      })
   }
 
   const {
@@ -59,26 +51,29 @@ const Login = () => {
     handleSubmit: registerHandleSubmit,
     reset: registerReset,
     setError: registerSetError
-  } = useForm<FormRegisterValueType>();
+  } = useForm<FormRegisterValueType>()
 
   const onRegisterSubmit: SubmitHandler<FormRegisterValueType> = async (data) => {
+    const usersWithLogin = await axios.get('api/account/existslogin', { params: { login: data.regLogin } }).then(({ data }) => data)
+    const usersWithEmail = await axios.get('api/account/existsemail', { params: { email: data.regEmail } }).then(({ data }) => data)
 
-    const usersWithLogin = await axios.get("api/account/existslogin", {params: {login: data.regLogin}}).then(({data}) => data)
-    const usersWithEmail = await axios.get("api/account/existsemail", {params: {email: data.regEmail}}).then(({data}) => data)
-
-    if (!usersWithEmail || !usersWithLogin) {
-      registerSetError("regLogin", {type: "custom", message: "userLogin is using"})
+    if (!(usersWithEmail) || !usersWithLogin) {
+      registerSetError('regLogin', {
+        type: 'custom',
+        message: 'userLogin is using'
+      })
     } else {
-      await axios.post("/api/account/register", {
+      console.log(data)
+      await axios.post('/api/account/register', {
         login: data.regLogin,
         email: data.regEmail,
-        password: crypto.SHA1(data.regPassword).toString(),
+        password: data.regPassword,
         name: data.regName,
         surname: data.regSurname,
-        patronymic: data.regPatronomic,
-      });
-      registerReset();
-      navigate("/");
+        patronymic: data.regPatronymic
+      })
+      registerReset()
+      navigate('/')
     }
   }
 
@@ -89,16 +84,16 @@ const Login = () => {
         <label htmlFor={style.login}
                id={style.loginLabel}
                onClick={() => {
-                 registerReset();
-                 loginReset();
+                 registerReset()
+                 loginReset()
                }}>Вход
         </label>
         <input type="radio" name="logReg" id={style.register}/>
         <label htmlFor={style.register}
                id={style.registerLabel}
                onClick={() => {
-                 registerReset();
-                 loginReset();
+                 registerReset()
+                 loginReset()
                }}>Регистрация
         </label>
       </div>
@@ -106,14 +101,14 @@ const Login = () => {
         <form onSubmit={loginHandleSubmit(onLoginSubmit)}>
           <input type="text"
                  className={style.input}
-                 {...loginRegister("username", {required: true})}
-                 placeholder={"Логин"}
-                 autoComplete={"off"}/>
+                 {...loginRegister('username', { required: true })}
+                 placeholder={'Логин'}
+                 autoComplete={'off'}/>
           <input type="password"
                  className={style.input}
-                 {...loginRegister("password", {required: true})}
-                 placeholder={"Пароль"}
-                 autoComplete={"off"}/>
+                 {...loginRegister('password', { required: true })}
+                 placeholder={'Пароль'}
+                 autoComplete={'off'}/>
           <button type="submit" className={style.submit}>Войти</button>
         </form>
       </div>
@@ -121,39 +116,39 @@ const Login = () => {
         <form onSubmit={registerHandleSubmit(onRegisterSubmit)}>
           <input type="text"
                  className={style.input}
-                 {...registerRegister("regLogin", {required: true})}
-                 placeholder={"Логин"}
-                 autoComplete={"off"}/>
+                 {...registerRegister('regLogin', { required: true })}
+                 placeholder={'Логин'}
+                 autoComplete={'off'}/>
           <input type="email"
                  className={style.input}
-                 {...registerRegister("regEmail", {required: true})}
-                 placeholder={"Почта"}
-                 autoComplete={"off"}/>
+                 {...registerRegister('regEmail', { required: true })}
+                 placeholder={'Почта'}
+                 autoComplete={'off'}/>
           <input type="password"
                  className={style.input}
-                 {...registerRegister("regPassword", {required: true})}
-                 placeholder={"Пароль"}
-                 autoComplete={"off"}/>
+                 {...registerRegister('regPassword', { required: true })}
+                 placeholder={'Пароль'}
+                 autoComplete={'off'}/>
           <input type="text"
                  className={style.input}
-                 {...registerRegister("regName", {required: true})}
-                 placeholder={"Имя"}
-                 autoComplete={"off"}/>
+                 {...registerRegister('regName', { required: true })}
+                 placeholder={'Имя'}
+                 autoComplete={'off'}/>
           <input type="text"
                  className={style.input}
-                 {...registerRegister("regSurname", {required: true})}
-                 placeholder={"Фамилия"}
-                 autoComplete={"off"}/>
+                 {...registerRegister('regSurname', { required: true })}
+                 placeholder={'Фамилия'}
+                 autoComplete={'off'}/>
           <input type="text"
                  className={style.input}
-                 {...registerRegister("regPatronomic", {required: true})}
-                 placeholder={"Отчество"}
-                 autoComplete={"off"}/>
+                 {...registerRegister('regPatronymic', { required: true })}
+                 placeholder={'Отчество'}
+                 autoComplete={'off'}/>
           <button type="submit" className={style.submit}>Зарегистрироваться</button>
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

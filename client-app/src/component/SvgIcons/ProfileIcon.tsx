@@ -1,11 +1,11 @@
-import React from "react";
-import { SvgIconProp } from "./types/SvgIcons";
+import React from 'react'
+import { type SvgIconProp } from './types/SvgIcons'
 
 const ProfileIcon: React.FC<SvgIconProp> = ({
-  fillColor = "currentColor",
-  className = "",
+  fillColor = 'currentColor',
+  className = '',
   width = 18,
-  height = 19,
+  height = 19
 }) => {
   return (
     <div className={className}>
@@ -32,7 +32,7 @@ const ProfileIcon: React.FC<SvgIconProp> = ({
         />
       </svg>
     </div>
-  );
-};
+  )
+}
 
-export default ProfileIcon;
+export default ProfileIcon

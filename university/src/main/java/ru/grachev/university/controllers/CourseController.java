@@ -3,13 +3,12 @@ package ru.grachev.university.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.grachev.university.model.Course;
+import ru.grachev.university.model.Test;
 import ru.grachev.university.service.CourseServices;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -37,6 +36,16 @@ public class CourseController {
         return auth.getName() == null
                 ? courseServices.getCourseWithAvailableTest(id)
                 : courseServices.getCourseWithAvailableTestWithStudent(id, auth.getName());
+    }
+
+    @GetMapping("test/{id}")
+    public Test getTestById(@PathVariable String id) {
+        return courseServices.getTestById(id);
+    }
+
+    @PostMapping("test")
+    public int getTestGrade(@RequestBody HashMap<String, List<String>> test, Authentication auth) {
+        return courseServices.getTestGrade(test, auth.getName());
     }
 
     @GetMapping("fillcourses")
