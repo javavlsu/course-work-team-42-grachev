@@ -1,5 +1,6 @@
 import { type Question } from '../../../../mobx/store.types'
 
 export type QuestionProps = {
-  question: Question
+  question: Question,
+  questionIndex: number
 }

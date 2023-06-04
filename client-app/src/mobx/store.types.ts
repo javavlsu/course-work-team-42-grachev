@@ -11,13 +11,11 @@ export type Account = {
 }
 
 export type Question = {
-  testId: number
   question: string
   answers: Answer[]
 }
 
 export type Answer = {
-  questionId: number
   text: string
   isCorrect: boolean
 }

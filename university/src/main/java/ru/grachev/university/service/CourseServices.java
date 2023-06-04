@@ -3,6 +3,7 @@ package ru.grachev.university.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.grachev.university.model.*;
+import ru.grachev.university.model.viewModel.CreateTestModel;
 import ru.grachev.university.repository.*;
 
 import java.time.LocalDate;
@@ -83,19 +84,58 @@ public class CourseServices {
 
     }
 
+    public Test addTestToCourse(CreateTestModel model) {
+        var course = courseRepository.findById(model.courseId).get();
+
+        var test = new Test(
+                course,
+                model.testTitle,
+                new ArrayList<>(),
+                new ArrayList<>(),
+                model.endDate,
+                model.isAvailable
+        );
+
+        var questions = new ArrayList<Question>();
+        var answers = new ArrayList<Answer>();
+
+        for (var question : model.questions) {
+            var newQuestion = new Question(
+                    test,
+                    question.question,
+                    new ArrayList<>()
+            );
+
+            questions.add(newQuestion);
+
+            for (var answer : question.answers) {
+                answers.add(new Answer(
+                        newQuestion,
+                        answer.text,
+                        answer.isCorrect
+                ));
+            }
+        }
+
+        var newTest = testRepository.save(test);
+        questionRepository.saveAll(questions);
+        answerRepository.saveAll(answers);
+
+        return testRepository.findById(newTest.id).get();
+
+    }
+
     public List<Course> fillCourses() {
-        List<Course> courses = new ArrayList<Course>(
-                Arrays.asList(
-                        new Course(
-                                "Java",
-                                "Грачев",
-                                new ArrayList<Test>()
-                        ),
-                        new Course(
-                                "Case-технологии",
-                                "Грачевский",
-                                new ArrayList<Test>()
-                        )
+        List<Course> courses = Arrays.asList(
+                new Course(
+                        "Java",
+                        "Грачев",
+                        new ArrayList<Test>()
+                ),
+                new Course(
+                        "Case-технологии",
+                        "Грачевский",
+                        new ArrayList<Test>()
                 )
         );
 

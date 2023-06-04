@@ -33,7 +33,7 @@ const ContactForm: React.FC<ContactFormTypes> = ({ className }) => {
         <img src="/img/Layout/sova.png" alt="сова" className={style.sova}/>
         <div className={style.helpWrapper}>
           <div className={style.help}>
-            <h4>Помочь с выбором?</h4> <br/>
+            <h4>Возникла проблема?</h4> <br/>
             <p>
               Оставьте заявку и наши специалисты свяжутся с вами, ответят на все
               вопросы и подберут подходящий вариант обучения.

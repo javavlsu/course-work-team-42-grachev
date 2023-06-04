@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.grachev.university.model.Course;
 import ru.grachev.university.model.Test;
+import ru.grachev.university.model.viewModel.CreateTestModel;
 import ru.grachev.university.service.CourseServices;
 
 import java.util.HashMap;
@@ -46,6 +47,11 @@ public class CourseController {
     @PostMapping("test")
     public int getTestGrade(@RequestBody HashMap<String, List<String>> test, Authentication auth) {
         return courseServices.getTestGrade(test, auth.getName());
+    }
+
+    @PostMapping("addtesttocourse")
+    public Test addTestToCourse(@RequestBody CreateTestModel model) {
+        return courseServices.addTestToCourse(model);
     }
 
     @GetMapping("fillcourses")
