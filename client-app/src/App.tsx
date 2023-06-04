@@ -11,6 +11,7 @@ import Course from './pages/Course/Course'
 import Test from './pages/Test/Test'
 import { UserStore } from './mobx'
 import { fetchAccountData } from './util'
+import CreateTest from './pages/CreateTest/CreateTest'
 
 function App () {
   React.useEffect(() => {
@@ -28,6 +29,7 @@ function App () {
             <Route path={PATHS.PROFILE + '/:login'} element={<Profile/>}/>
             <Route path={PATHS.COURSE + '/:id'} element={<Course/>}/>
             <Route path={PATHS.TESTS + '/:testid'} element={<Test/>}/>
+            <Route path={PATHS.TESTS + '/new/:courseid'} element={<CreateTest/>}/>
             <Route path="*" element={<NotFound/>}/>
           </Route>
         </Routes>

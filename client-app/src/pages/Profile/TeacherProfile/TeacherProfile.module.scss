@@ -1,0 +1,247 @@
+.main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftBlock {
+  width: 240px;
+
+  .logo {
+    margin-top: 60px;
+    width: 139px;
+    border-radius: 50%;
+  }
+
+  h3.name {
+    margin-top: 45px;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  p.email {
+    margin-top: -5px;
+    font-weight: 400;
+    font-size: 12px;
+    color: #BDBDBD;
+  }
+}
+
+.score {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+
+  .score__title {
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+  }
+
+  .score__count {
+    font-weight: 600;
+    font-size: 24px;
+    color: #3D8BE4;
+  }
+
+  .score__link {
+    display: flex;
+    width: 120px;
+    height: 40px;
+    border: 1px solid #3D8BE4;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #3D8BE4;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background: #FAFCFF;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+
+.pages {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  font-size: 16px;
+
+  label {
+    margin: 7px 0;
+  }
+
+  input {
+    display: none;
+  }
+
+  input#desktop:checked + label#desktop_label,
+  input#course:checked + label#course_label,
+  input#settings:checked + label#settings_label {
+    font-weight: 600;
+    color: #3D8BE4;
+  }
+}
+
+button.exitButton {
+  font-family: "Montserrat", sans-serif;
+  margin-top: 7px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #DF5E42;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+
+.rightBlock {
+  padding-top: 60px;
+  width: 730px;
+
+  hr {
+    width: 106%;
+    margin-left: -3%;
+    opacity: 0.1;
+    border: 1px solid #000000;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+
+  .tab__title {
+    font-weight: 600;
+    font-size: 36px;
+    margin-bottom: 30px;
+  }
+
+  #desktopTab, #courseTab, #settingsTab {
+    display: none;
+  }
+
+  .tabActive {
+    display: block;
+  }
+
+  .tab__username {
+    font-weight: 600;
+    font-size: 24px;
+  }
+
+  .tab__block {
+    width: 100%;
+    padding: 40px 50px;
+    border: 1px solid #E5E5E5;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+
+    h6 {
+      font-weight: 400;
+      font-size: 16px;
+      opacity: 0.4;
+    }
+
+    table {
+      margin-left: -20px;
+      border-spacing: 20px 30px;
+    }
+
+    .table__opr {
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .table_znach {
+      font-weight: 400;
+      font-size: 17px;
+    }
+  }
+  input.input {
+    width: 380px;
+    height: 50px;
+    background: #DDDFE6;
+    border-radius: 6px;
+    outline: none;
+    margin: 10px 0;
+    padding-left: 19px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #00093C;
+    border: 2px solid transparent;
+    &:hover {
+      background: rgba(221, 223, 230, 0.7);
+      border: 1px solid rgba(39, 170, 225, 0.5);
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    &:focus {
+      border: 2px solid #27AAE1;
+    }
+    &::placeholder {
+      font-family: 'Montserrat',sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: rgba(79, 79, 79, 0.5);
+    }
+  }
+
+  button.submit {
+    height: 50px;
+    padding: 0 60px;
+    background: #F7941D;
+    border-radius: 6px;
+    border: none;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 26px;
+    color: #FFFFFF;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+    &:hover {
+      background: #FFAE4D;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    }
+    &:active {
+      box-shadow: none;
+      transform: translate(1px,1px);
+    }
+  }
+}
+
+.leftBlock:has(.pages>input#desktop:checked) + .rightBlock > #desktopTab,
+.leftBlock:has(.pages>input#course:checked) + .rightBlock > #courseTab,
+.leftBlock:has(.pages>input#settings:checked) + .rightBlock > #settingsTab {
+  display: block;
+}
+
+
+.courseCard {
+  width: 100%;
+  height: 80px;
+  border-radius: 20px;
+  position: relative;
+  padding-top: 15px;
+  padding-left: 20px;
+  cursor: pointer;
+  margin-bottom: 30px;
+
+  h3 {
+    width: 90%;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 26px;
+    color: #000000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  p {
+    margin-top: 5px;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+}

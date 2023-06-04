@@ -30,6 +30,11 @@ const Course = () => {
               </Link>
             </li>
           )}
+          <li className={clsx(style.testItem, 'greenCard')}>
+            <Link to={`${PATHS.TESTS}/new/${id as string}`}>
+              +
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
