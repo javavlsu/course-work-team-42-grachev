@@ -23,7 +23,7 @@ export type TestTypes = {
   id: number
   theme: string
   questions: QuestionTypes[]
-  endDate: Date
+  endDate: string
   passedStudents: StudentTypes[]
   isAvailable: boolean
 }

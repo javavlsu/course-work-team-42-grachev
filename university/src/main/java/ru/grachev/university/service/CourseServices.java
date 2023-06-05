@@ -3,6 +3,7 @@ package ru.grachev.university.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.grachev.university.model.*;
+import ru.grachev.university.model.viewModel.ChangeTestInfo;
 import ru.grachev.university.model.viewModel.CreateTestModel;
 import ru.grachev.university.repository.*;
 
@@ -13,6 +14,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CourseServices {
 
+    private final AccountRepository accountRepository;
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final TestRepository testRepository;
@@ -27,7 +29,24 @@ public class CourseServices {
         return courseRepository.findAll().stream().peek(course -> course.tests = null).toList();
     }
 
-    public Course getCourseWithAvailableTest(String id) {
+    public Course getCourse(String id, String login) {
+        var user = accountRepository.findFirstByLogin(login);
+        if (Objects.equals(user.role, "teacher")) {
+            return courseRepository.findFirstById(id);
+        } else {
+            Student student = studentRepository.findFirstByAccount_Login(login);
+            Course course = courseRepository.findFirstById(id);
+            course.tests = course.tests
+                .stream()
+                .filter(test -> test.endDate.isAfter(LocalDate.now())
+                    && test.isAvailable
+                    && test.passedStudents.stream().noneMatch(s -> Objects.equals(s.id, student.id))
+                ).toList();
+            return course;
+        }
+    }
+
+    public Course getCourseWithAvailableTest(String id, String login) {
         Course course = courseRepository.findFirstById(id);
         course.tests = course.tests.stream().filter(test -> test.endDate.isAfter(LocalDate.now()) && test.isAvailable).toList();
         return course;
@@ -37,11 +56,11 @@ public class CourseServices {
         Student student = studentRepository.findFirstByAccount_Login(login);
         Course course = courseRepository.findFirstById(id);
         course.tests = course.tests
-                .stream()
-                .filter(test -> test.endDate.isAfter(LocalDate.now())
-                        && test.isAvailable
-                        && test.passedStudents.stream().noneMatch(s -> Objects.equals(s.id, student.id))
-                ).toList();
+            .stream()
+            .filter(test -> test.endDate.isAfter(LocalDate.now())
+                && test.isAvailable
+                && test.passedStudents.stream().noneMatch(s -> Objects.equals(s.id, student.id))
+            ).toList();
         return course;
     }
 
@@ -88,12 +107,12 @@ public class CourseServices {
         var course = courseRepository.findById(model.courseId).get();
 
         var test = new Test(
-                course,
-                model.testTitle,
-                new ArrayList<>(),
-                new ArrayList<>(),
-                model.endDate,
-                model.isAvailable
+            course,
+            model.testTitle,
+            new ArrayList<>(),
+            new ArrayList<>(),
+            model.endDate,
+            model.isAvailable
         );
 
         var questions = new ArrayList<Question>();
@@ -101,18 +120,18 @@ public class CourseServices {
 
         for (var question : model.questions) {
             var newQuestion = new Question(
-                    test,
-                    question.question,
-                    new ArrayList<>()
+                test,
+                question.question,
+                new ArrayList<>()
             );
 
             questions.add(newQuestion);
 
             for (var answer : question.answers) {
                 answers.add(new Answer(
-                        newQuestion,
-                        answer.text,
-                        answer.isCorrect
+                    newQuestion,
+                    answer.text,
+                    answer.isCorrect
                 ));
             }
         }
@@ -125,110 +144,120 @@ public class CourseServices {
 
     }
 
+    public Test changeTestInfo(ChangeTestInfo model) {
+        var test = testRepository.findById(model.testId).get();
+
+        test.theme = model.theme;
+        test.endDate = model.endDate;
+        test.isAvailable = model.isAvailable;
+
+        return testRepository.save(test);
+    }
+
     public List<Course> fillCourses() {
         List<Course> courses = Arrays.asList(
-                new Course(
-                        "Java",
-                        "Грачев",
-                        new ArrayList<Test>()
-                ),
-                new Course(
-                        "Case-технологии",
-                        "Грачевский",
-                        new ArrayList<Test>()
-                )
+            new Course(
+                "Java",
+                "Грачев",
+                new ArrayList<Test>()
+            ),
+            new Course(
+                "Case-технологии",
+                "Грачевский",
+                new ArrayList<Test>()
+            )
         );
 
         var tests = Arrays.asList(
-                new Test(
-                        courses.get(0),
-                        "Типы данных",
-                        new ArrayList<>(),
-                        new ArrayList<>(),
-                        LocalDate.of(2023, 6, 5),
-                        true
-                ),
-                new Test(
-                        courses.get(1),
-                        "IDEF",
-                        new ArrayList<>(),
-                        new ArrayList<>(),
-                        LocalDate.of(2023, 7, 6),
-                        true
-                ),
-                new Test(
-                        courses.get(1),
-                        "Тестовый тест",
-                        new ArrayList<>(),
-                        new ArrayList<>(),
-                        LocalDate.of(2023, 8, 7),
-                        true
-                )
+            new Test(
+                courses.get(0),
+                "Типы данных",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                LocalDate.of(2023, 6, 5),
+                true
+            ),
+            new Test(
+                courses.get(1),
+                "IDEF",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                LocalDate.of(2023, 7, 6),
+                true
+            ),
+            new Test(
+                courses.get(1),
+                "Тестовый тест",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                LocalDate.of(2023, 8, 7),
+                true
+            )
         );
 
         var questions = Arrays.asList(
-                new Question(
-                        tests.get(0),
-                        "Какие есть типы данных в Java?",
-                        new ArrayList<>()
-                ),
-                new Question(
-                        tests.get(0),
-                        "Какие есть фреймворки в Java?",
-                        new ArrayList<>()
-                ),
-                new Question(
-                        tests.get(1),
-                        "Какие типы стрелок есть на IDEF0?",
-                        new ArrayList<>()
-                ),
-                new Question(
-                        tests.get(1),
-                        "Какие типы IDEF существуют?",
-                        new ArrayList<>()
-                ),
-                new Question(
-                        tests.get(2),
-                        "Первый тестовый вопрос",
-                        new ArrayList<>()
-                ),
-                new Question(
-                        tests.get(2),
-                        "Второй тестовый вопрос",
-                        new ArrayList<>()
-                )
+            new Question(
+                tests.get(0),
+                "Какие есть типы данных в Java?",
+                new ArrayList<>()
+            ),
+            new Question(
+                tests.get(0),
+                "Какие есть фреймворки в Java?",
+                new ArrayList<>()
+            ),
+            new Question(
+                tests.get(1),
+                "Какие типы стрелок есть на IDEF0?",
+                new ArrayList<>()
+            ),
+            new Question(
+                tests.get(1),
+                "Какие типы IDEF существуют?",
+                new ArrayList<>()
+            ),
+            new Question(
+                tests.get(2),
+                "Первый тестовый вопрос",
+                new ArrayList<>()
+            ),
+            new Question(
+                tests.get(2),
+                "Второй тестовый вопрос",
+                new ArrayList<>()
+            )
         );
 
         var answers = Arrays.asList(
-                new Answer(questions.get(0), "String", true),
-                new Answer(questions.get(0), "Number", false),
-                new Answer(questions.get(0), "ArrayList", true),
-                new Answer(questions.get(0), "undefined", false),
+            new Answer(questions.get(0), "String", true),
+            new Answer(questions.get(0), "Number", false),
+            new Answer(questions.get(0), "ArrayList", true),
+            new Answer(questions.get(0), "undefined", false),
 
-                new Answer(questions.get(1), "Spring", true),
-                new Answer(questions.get(1), "React", false),
-                new Answer(questions.get(1), "Java EE", true),
-                new Answer(questions.get(1), "ASP", false),
-
-
-                new Answer(questions.get(2), "Управление", true),
-                new Answer(questions.get(2), "Механизм", true),
-                new Answer(questions.get(2), "Ассоциация", false),
-
-                new Answer(questions.get(3), "IDEF0", true),
-                new Answer(questions.get(3), "IDEF3", true),
-                new Answer(questions.get(3), "IDEF98", false),
+            new Answer(questions.get(1), "Spring", true),
+            new Answer(questions.get(1), "React", false),
+            new Answer(questions.get(1), "Java EE", true),
+            new Answer(questions.get(1), "ASP", false),
 
 
-                new Answer(questions.get(4), "Первый тестовый ответ", true),
-                new Answer(questions.get(4), "Второй тестовый ответ", false),
-                new Answer(questions.get(4), "Третий тестовый ответ", true),
-                new Answer(questions.get(4), "Четвертый тестовый ответ", false),
+            new Answer(questions.get(2), "Управление", true),
+            new Answer(questions.get(2), "Механизм", true),
+            new Answer(questions.get(2), "Ассоциация", false),
 
-                new Answer(questions.get(5), "Пятый тестовый ответ", true),
-                new Answer(questions.get(5), "Шестой тестовый ответ", false),
-                new Answer(questions.get(5), "Седьмой тестовый ответ", true),
-                new Answer(questions.get(5), "Восьмой тестовый ответ", false)
+            new Answer(questions.get(3), "IDEF0", true),
+            new Answer(questions.get(3), "IDEF3", true),
+            new Answer(questions.get(3), "IDEF98", false),
+
+
+            new Answer(questions.get(4), "Первый тестовый ответ", true),
+            new Answer(questions.get(4), "Второй тестовый ответ", false),
+            new Answer(questions.get(4), "Третий тестовый ответ", true),
+            new Answer(questions.get(4), "Четвертый тестовый ответ", false),
+
+            new Answer(questions.get(5), "Пятый тестовый ответ", true),
+            new Answer(questions.get(5), "Шестой тестовый ответ", false),
+            new Answer(questions.get(5), "Седьмой тестовый ответ", true),
+            new Answer(questions.get(5), "Восьмой тестовый ответ", false)
         );
 
         courseRepository.saveAll(courses);

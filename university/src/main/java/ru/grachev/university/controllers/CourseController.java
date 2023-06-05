@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ru.grachev.university.model.Course;
 import ru.grachev.university.model.Test;
+import ru.grachev.university.model.viewModel.ChangeTestInfo;
 import ru.grachev.university.model.viewModel.CreateTestModel;
 import ru.grachev.university.service.CourseServices;
 
@@ -31,12 +32,10 @@ public class CourseController {
 
     @GetMapping("{id}")
     public Course getCourseById(
-            Authentication auth,
-            @PathVariable String id
+        Authentication auth,
+        @PathVariable String id
     ) {
-        return auth.getName() == null
-                ? courseServices.getCourseWithAvailableTest(id)
-                : courseServices.getCourseWithAvailableTestWithStudent(id, auth.getName());
+        return courseServices.getCourse(id, auth.getName());
     }
 
     @GetMapping("test/{id}")
@@ -52,6 +51,11 @@ public class CourseController {
     @PostMapping("addtesttocourse")
     public Test addTestToCourse(@RequestBody CreateTestModel model) {
         return courseServices.addTestToCourse(model);
+    }
+
+    @PostMapping("changetestinfo")
+    public Test changeTestInfo(@RequestBody ChangeTestInfo model) {
+        return courseServices.changeTestInfo(model);
     }
 
     @GetMapping("fillcourses")

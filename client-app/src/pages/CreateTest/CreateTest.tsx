@@ -14,7 +14,7 @@ import {
   Paper,
   TextField
 } from '@mui/material'
-import { TestStore } from '../../mobx'
+import { TestStore, UserStore } from '../../mobx'
 import { Question } from './components'
 import { observer } from 'mobx-react-lite'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -24,6 +24,12 @@ const CreateTest = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (UserStore.role !== 'teacher') {
+      navigate('/404')
+    }
+  }, [])
 
   useEffect(() => {
     if (courseid && TestStore.courseId.toString() !== courseid) {
