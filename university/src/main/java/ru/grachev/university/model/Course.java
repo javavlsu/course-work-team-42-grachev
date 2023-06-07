@@ -17,7 +17,6 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String title;
-    //TODO: привязать тичера к пользователю
     public String teacher;
     @OneToMany(mappedBy = "course")
     public List<Test> tests;

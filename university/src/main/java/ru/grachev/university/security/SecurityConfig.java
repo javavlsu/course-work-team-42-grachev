@@ -29,49 +29,53 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests()
-                .requestMatchers(
-                        "/api/account/register",
-                        "/api/account/existsemail",
-                        "/api/account/existslogin"
-                ).permitAll()
-                .requestMatchers("/api/account/**").authenticated()
+            .authorizeHttpRequests()
+            .requestMatchers(
+                "/api/account/register",
+                "/api/account/existsemail",
+                "/api/account/existslogin"
+            ).permitAll()
+            .requestMatchers("/api/account/**").authenticated()
 
-                .requestMatchers("/api/admin/**").hasAuthority("admin")
+            .requestMatchers("/api/admin/**").hasAuthority("admin")
 
-                .requestMatchers("/api/courses/fillcourses").hasAuthority("admin")
-                .requestMatchers("/api/courses/**").hasAnyAuthority("student", "teacher", "admin")
+            .requestMatchers("/api/courses/fillcourses").hasAuthority("admin")
+            .requestMatchers(
+                "/api/courses/addtesttocourse",
+                "/api/courses/changetestinfo"
+            ).hasAuthority("teacher")
+            .requestMatchers("/api/courses/**").hasAnyAuthority("student", "teacher", "admin")
 
-                .requestMatchers(
-                        "/api/servicesinfo",
-                        "/api/appeal"
-                ).permitAll()
+            .requestMatchers(
+                "/api/servicesinfo",
+                "/api/appeal"
+            ).permitAll()
 
-                .requestMatchers("/api/student/**").hasAuthority("student")
+            .requestMatchers("/api/student/**").hasAuthority("student")
 
-                .requestMatchers("/**").permitAll()
-                .and()
+            .requestMatchers("/**").permitAll()
+            .and()
 
 
-                .logout(logout -> logout.logoutUrl("/api/account/logout"))
+            .logout(logout -> logout.logoutUrl("/api/account/logout"))
 
-                .formLogin()
-                .loginProcessingUrl("/api/account/login")
-                .successHandler((request, response, authentication) -> {
-                })
-                .failureHandler((request, response, authentication) -> response.setStatus(400))
-                .and()
+            .formLogin()
+            .loginProcessingUrl("/api/account/login")
+            .successHandler((request, response, authentication) -> {
+            })
+            .failureHandler((request, response, authentication) -> response.setStatus(400))
+            .and()
 
-                .exceptionHandling()
-                .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
-                .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(new Http403ForbiddenEntryPoint())
+            .and()
 
-                .cors()
-                .and()
+            .cors()
+            .and()
 
-                .csrf()
-                .disable()
-                .build();
+            .csrf()
+            .disable()
+            .build();
 
     }
 

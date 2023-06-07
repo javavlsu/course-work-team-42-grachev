@@ -16,6 +16,9 @@ public class AccountServices {
 
     public Account create(Account account) {
         account.setPassword(encoder.encode(account.password));
+        if (isLoginExists(account.login) || isEmailExists(account.email)) {
+            return new Account();
+        }
         return accountRepository.save(account);
     }
 

@@ -17,7 +17,6 @@ const Test = () => {
       testId: [testid],
       ...serializer(e.target)
     }
-    console.log(result)
     axios
       .post('/api/courses/test', result)
       .then(r => r.data)
